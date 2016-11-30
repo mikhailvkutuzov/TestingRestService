@@ -43,10 +43,6 @@ public class TestRealBookScriptorSuit {
 
         response = target.path("test-suit/chrome/TC03OrderForms").request().get(TestSuitResult.class);
         assertTrue(response.getResults().size() >= 1);
-        r0 = response.getResults().get(0);
-        assertEquals("", r0.getMessage());
     }
-
-
 
 }

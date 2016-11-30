@@ -13,13 +13,16 @@ public class TestCaseResult {
     private TestCaseDescription description;
     @XmlElement
     private String message;
+    @XmlElement
+    private int seconds;
 
     public TestCaseResult() {
     }
 
-    public TestCaseResult(TestCaseDescription description, String message) {
+    public TestCaseResult(TestCaseDescription description, String message, int seconds) {
         this.description = description;
         this.message = message;
+        this.seconds = seconds;
     }
 
     public TestCaseDescription getDescription() {
@@ -36,5 +39,22 @@ public class TestCaseResult {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public int getSeconds() {
+        return seconds;
+    }
+
+    public void setSeconds(int seconds) {
+        this.seconds = seconds;
+    }
+
+    @Override
+    public String toString() {
+        return "TestCaseResult{" +
+                "description=" + description +
+                ", message='" + message + '\'' +
+                ", seconds=" + seconds +
+                '}';
     }
 }

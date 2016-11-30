@@ -22,8 +22,21 @@ public class ServiceManager {
         return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
     }
 
+    public static HttpServer start(String packagePath) {
+
+        new ProduceChromeDriver(new SingleFileByPath()).create("chromedriver.exe", new File("chromedriver.exe"));
+
+        final ResourceConfig rc = new ResourceConfig().packages(packagePath);
+
+        HttpServer server =  GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
+
+        return server;
+
+    }
+
+
     public static void main(String[] args) throws IOException {
-        final HttpServer server = start(TestCaseResources.class);
+        final HttpServer server = start("com.testing.service");
         System.out.println(String.format("Jersey app started with WADL available at "
                 + "%sapplication.wadl\nHit enter to stop it...", BASE_URI));
         System.in.read();
