@@ -3,6 +3,7 @@ package com.testing.service;
 import java.io.File;
 import java.net.URL;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -41,7 +42,7 @@ public class ClassesFromPackage {
         return classList;
     }
 
-    public static List<String> getMappedHbmResources(String packageName) throws Exception {
+    public static List<String> getResourcesByExtent(String packageName, Predicate<String> test) throws Exception {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         assert classLoader != null;
         String path = packageName.replace('.', '/');
@@ -53,7 +54,7 @@ public class ClassesFromPackage {
         }
         List<String> mappings = new ArrayList<>();
         for (String directory : dirs) {
-            mappings.addAll(findHbmXml(directory, packageName));
+            mappings.addAll(findFilesByExtent(directory, packageName, test));
         }
         return mappings;
     }
@@ -99,15 +100,16 @@ public class ClassesFromPackage {
 
 
 
-    private static TreeSet<String> findHbmXml(String directory, String packageName) throws Exception {
-        TreeSet<String> hbmClasses = new TreeSet<String>();
+    private static TreeSet<String> findFilesByExtent(String directory, String packageName, Predicate<String> test) throws Exception {
+        TreeSet<String> hbmClasses = new TreeSet<>();
         if (directory.startsWith("file:") && directory.contains("!")) {
+            System.out.println("find in jar");
             String[] split = directory.split("!");
             URL jar = new URL(split[0]);
             ZipInputStream zip = new ZipInputStream(jar.openStream());
             ZipEntry entry;
             while ((entry = zip.getNextEntry()) != null) {
-                if (entry.getName().endsWith(".hbm.xml")) {
+                if (test.test(entry.getName())) {
                     String className = entry.getName();
                     hbmClasses.add(className);
                 }
@@ -121,8 +123,8 @@ public class ClassesFromPackage {
         for (File file : files) {
             if (file.isDirectory()) {
                 assert !file.getName().contains(".");
-                hbmClasses.addAll(findHbmXml(file.getAbsolutePath(), packageName + "." + file.getName()));
-            } else if (file.getName().endsWith(".hbm.xml")) {
+                hbmClasses.addAll(findFilesByExtent(file.getAbsolutePath(), packageName + "." + file.getName(), test));
+            } else if (test.test(file.getName())) {
                 hbmClasses.add(packageName + '.' + file.getName());
             }
         }
