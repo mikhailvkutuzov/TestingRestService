@@ -16,7 +16,7 @@ public class TestSuitesInBookScriptorCache implements TestRetriever {
         try {
             List<Class> classes = ClassesFromPackage.getClasses("com.testing.bookscriptor");
 
-             testSuites = classes.stream()
+            testSuites = classes.stream()
                     .filter(c -> TestSuite.class.isAssignableFrom(c))
                     .map(c -> {
                         try {
