@@ -54,6 +54,7 @@ public class ServiceManager {
                         || s.endsWith(".doc")
                         || s.endsWith(".odt")
                         || s.endsWith(".txt")
+                        || s.endsWith(".rtf")
         )){
             String flatName = resource.split("resources")[1].substring(1);
             File file = new File("target/classes/resources/"+flatName);
