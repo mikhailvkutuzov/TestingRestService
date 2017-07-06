@@ -41,11 +41,6 @@
             <artifactId>TF</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>com.testing</groupId>
-            <artifactId>BookScriptor</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
     </dependencies>
 
     <build>
