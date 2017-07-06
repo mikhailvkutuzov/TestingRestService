@@ -6,12 +6,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import test.smoketest.utils.*;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URI;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
 
 public class ServiceManager {
     public static final String BASE_URI = "http://localhost:8080/testing/";
@@ -20,7 +15,7 @@ public class ServiceManager {
 
         copyDocXResources();
 
-        new ProduceChromeDriver(new DeterminateExtentionResource(new ExecutableResource(new SingleFileByPath())))
+        new ProduceChromeDriver(new DeterminateExtensionResource(new ExecutableResource(new SingleFileByPath())))
                 .create("chromedriver", new File("chromedriver.exe"));
 
         final ResourceConfig rc = new ResourceConfig().register(component);
@@ -32,14 +27,12 @@ public class ServiceManager {
 
         copyDocXResources();
 
-        new ProduceChromeDriver(new DeterminateExtentionResource(new ExecutableResource(new SingleFileByPath())))
+        new ProduceChromeDriver(new DeterminateExtensionResource(new ExecutableResource(new SingleFileByPath())))
                 .create("chromedriver", new File("chromedriver.exe"));
 
         final ResourceConfig rc = new ResourceConfig().packages(packagePath);
 
-        HttpServer server =  GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
-
-        return server;
+        return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
 
     }
 
@@ -71,7 +64,7 @@ public class ServiceManager {
         System.out.println(String.format("Jersey app started with WADL available at "
                 + "%sapplication.wadl\nHit enter to stop it...", BASE_URI));
         System.in.read();
-        server.stop();
+        server.shutdown();
     }
 }
 
