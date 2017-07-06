@@ -9,12 +9,12 @@ import java.util.stream.Collectors;
 /**
  * Created by mikhail.kutuzov on 26.11.2016.
  */
-public class TestSuitesInBookScriptorCache implements TestRetriever {
+public class TestSuitesByPackageInCache implements TestRetriever {
     private Map<String, TestSuite> testSuites;
 
-    public TestSuitesInBookScriptorCache() {
+    public TestSuitesByPackageInCache(Package testingPackage) {
         try {
-            List<Class> classes = ClassesFromPackage.getClasses("com.testing.bookscriptor");
+            List<Class> classes = ClassesFromPackage.getClasses(testingPackage.getName());
 
             testSuites = classes.stream()
                     .filter(c -> TestSuite.class.isAssignableFrom(c))

@@ -3,9 +3,7 @@ package com.testing.service;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
-import test.smoketest.utils.FileFromResource;
-import test.smoketest.utils.ProduceChromeDriver;
-import test.smoketest.utils.SingleFileByPath;
+import test.smoketest.utils.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +20,8 @@ public class ServiceManager {
 
         copyDocXResources();
 
-        new ProduceChromeDriver(new SingleFileByPath()).create("chromedriver.exe", new File("chromedriver.exe"));
+        new ProduceChromeDriver(new DeterminateExtentionResource(new ExecutableResource(new SingleFileByPath())))
+                .create("chromedriver", new File("chromedriver.exe"));
 
         final ResourceConfig rc = new ResourceConfig().register(component);
 
@@ -33,7 +32,8 @@ public class ServiceManager {
 
         copyDocXResources();
 
-        new ProduceChromeDriver(new SingleFileByPath()).create("chromedriver.exe", new File("chromedriver.exe"));
+        new ProduceChromeDriver(new DeterminateExtentionResource(new ExecutableResource(new SingleFileByPath())))
+                .create("chromedriver", new File("chromedriver.exe"));
 
         final ResourceConfig rc = new ResourceConfig().packages(packagePath);
 

@@ -18,13 +18,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Path("/test-suit")
-public class TestCaseResources {
+public class TestCaseResourcesComTesting {
     private TestRetriever retriever;
     private TestSuitResult none;
 
 
-    public TestCaseResources() {
-        this.retriever = new TestSuitesInBookScriptorCache();
+    public TestCaseResourcesComTesting() {
+        this.retriever = new TestSuitesByPackageInCache(Package.getPackage("com.testing"));
 
         List<TestCaseResult> cases = new ArrayList<>(1);
         none = new TestSuitResult(cases);
@@ -37,7 +37,9 @@ public class TestCaseResources {
     @Produces(MediaType.APPLICATION_JSON)
     public TestSuitResult testSuitByName(@PathParam(value = "browser") String browser, @PathParam(value = "test-suit") String testSuitName) {
         try {
-            List<TestAndTestResult> tuples = retriever.get(testSuitName).action(WebBrowsers.Chrome, "http://bookscriptor.ru/");
+            String urlToBeTested = System.getProperty("urlToBeTested");
+            List<TestAndTestResult> tuples = retriever.get(testSuitName)
+                    .action(WebBrowsers.Chrome, urlToBeTested);
             List<TestCaseResult> results = tuples.stream()
                     .map(t ->
                             new TestCaseResult(
