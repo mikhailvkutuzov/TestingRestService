@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 public class TestCaseResourcesComTesting {
     private TestRetriever retriever;
     private TestSuitResult none;
+    private String urlToBeTested;
 
 
     public TestCaseResourcesComTesting() {
@@ -29,7 +30,11 @@ public class TestCaseResourcesComTesting {
         List<TestCaseResult> cases = new ArrayList<>(1);
         none = new TestSuitResult(cases);
         TestCaseDescription tcd = new TestCaseDescription("", "");
-        cases.add(new TestCaseResult(tcd, true, "No such a test suit has been found",  new ArrayList<>(0), 0));
+        cases.add(new TestCaseResult(tcd, true, "No such a test suit has been found", new ArrayList<>(0), 0));
+        urlToBeTested = System.getProperty("urlToBeTested");
+        if (urlToBeTested == null) {
+            throw new IllegalArgumentException();
+        }
     }
 
     @GET
@@ -37,7 +42,6 @@ public class TestCaseResourcesComTesting {
     @Produces(MediaType.APPLICATION_JSON)
     public TestSuitResult testSuitByName(@PathParam(value = "browser") String browser, @PathParam(value = "test-suit") String testSuitName) {
         try {
-            String urlToBeTested = System.getProperty("urlToBeTested");
             List<TestAndTestResult> tuples = retriever.get(testSuitName)
                     .action(WebBrowsers.Chrome, urlToBeTested);
             List<TestCaseResult> results = tuples.stream()
