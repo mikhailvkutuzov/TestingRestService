@@ -25,7 +25,7 @@ public class TestCaseResourcesComTesting {
 
 
     public TestCaseResourcesComTesting() {
-        this.retriever = new TestSuitesByPackageInCache(Package.getPackage("com.testing"));
+        this.retriever = new TestSuitesByPackageInCache("com.testing");
 
         List<TestCaseResult> cases = new ArrayList<>(1);
         none = new TestSuitResult(cases);

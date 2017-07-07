@@ -7,14 +7,16 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
+ * This class is made to get {@link TestSuite} inheritors from the specific package in a class path and
+ * put their instances in a map [{@link TestSuite}.class.SimpleName - {@link TestSuite}]
  * Created by mikhail.kutuzov on 26.11.2016.
  */
 public class TestSuitesByPackageInCache implements TestRetriever {
     private Map<String, TestSuite> testSuites;
 
-    public TestSuitesByPackageInCache(Package testingPackage) {
+    public TestSuitesByPackageInCache(String testingPackage) {
         try {
-            List<Class> classes = ClassesFromPackage.getClasses(testingPackage.getName());
+            List<Class> classes = ClassesFromPackage.getClasses(testingPackage);
 
             testSuites = classes.stream()
                     .filter(c -> TestSuite.class.isAssignableFrom(c))
