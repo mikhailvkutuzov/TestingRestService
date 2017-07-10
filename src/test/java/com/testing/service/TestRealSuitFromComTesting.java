@@ -35,7 +35,9 @@ public class TestRealSuitFromComTesting {
 
     @After
     public void tearDown() throws Exception {
-        server.shutdown();
+        if(server != null) {
+            server.shutdown();
+        }
     }
 
     @Test
