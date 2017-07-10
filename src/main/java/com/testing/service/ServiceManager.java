@@ -11,7 +11,7 @@ import java.net.URL;
 
 @SuppressWarnings("all")
 public class ServiceManager {
-    public static final String BASE_URI = "http://localhost:8080/testing/";
+    public static final String BASE_URI = "http://localhost:%d/testing/";
 
     public static HttpServer start(Class component) throws Exception {
 
@@ -22,7 +22,7 @@ public class ServiceManager {
 
         final ResourceConfig rc = new ResourceConfig().register(component);
 
-        return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
+        return GrizzlyHttpServerFactory.createHttpServer(URI.create(String.format(BASE_URI, 8181)), rc);
     }
 
     public static HttpServer start(String packagePath) throws Exception {
@@ -34,7 +34,7 @@ public class ServiceManager {
 
         final ResourceConfig rc = new ResourceConfig().packages(packagePath);
 
-        return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
+        return GrizzlyHttpServerFactory.createHttpServer(URI.create(String.format(BASE_URI, 8181)), rc);
 
     }
 
@@ -83,7 +83,7 @@ public class ServiceManager {
 
         final HttpServer server = start("com.testing.service");
         System.out.println(String.format("Jersey app started with WADL available at "
-                + "%sapplication.wadl\nHit enter to stop it...", BASE_URI));
+                + "%sapplication.wadl\nHit enter to stop it...", String.format(BASE_URI, 8181)));
         System.in.read();
         server.shutdown();
     }

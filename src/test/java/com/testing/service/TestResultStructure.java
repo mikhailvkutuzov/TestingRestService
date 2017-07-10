@@ -11,6 +11,8 @@ import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static com.testing.service.ServiceManager.BASE_URI;
 import static org.junit.Assert.assertEquals;
 
 public class TestResultStructure {
@@ -22,12 +24,12 @@ public class TestResultStructure {
     public void setUp() throws Exception {
         server = ServiceManager.start(GetTestSuitResult.class);
         Client c = ClientBuilder.newClient();
-        target = c.target(ServiceManager.BASE_URI);
+        target = c.target(String.format(BASE_URI, 8181));
     }
 
     @After
     public void tearDown() throws Exception {
-        server.stop();
+        server.shutdown();
     }
 
     @Test
