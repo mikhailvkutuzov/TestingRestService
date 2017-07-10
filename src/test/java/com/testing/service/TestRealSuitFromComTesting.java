@@ -11,7 +11,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 
-import static com.testing.service.ServiceManager.BASE_URI;
+import static com.testing.service.TestingServiceCreator.BASE_URI;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -28,7 +28,7 @@ public class TestRealSuitFromComTesting {
     @Before
     public void setUp() throws Exception {
         System.setProperty("urlToBeTested", "http://google.com/");
-        server = ServiceManager.start(TestCaseResourcesComTesting.class);
+        server = new CopyDocumentsFromClassPath(new ChromeTestingServiceCreator(new CoreTestingServiceCreator())).start(TestCaseResourcesComTesting.class);
         Client c = ClientBuilder.newClient();
         target = c.target(String.format(BASE_URI, 8181));
     }
