@@ -20,6 +20,8 @@ public class TestAdministration {
 
         ServiceManager.main(new String[]{"urlToBeTested=http://google.com/"});
 
+        ServiceManager.main(new String[]{"urlToBeTested=http://google.com/"});
+
         Client c = ClientBuilder.newClient();
         WebTarget target = c.target(String.format(BASE_URI, 8181));
         try {
@@ -27,7 +29,6 @@ public class TestAdministration {
         } catch (Exception  e){
         }
 
-        ServiceManager.main(new String[]{"urlToBeTested=http://google.com/"});
     }
 
 }

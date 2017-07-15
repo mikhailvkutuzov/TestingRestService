@@ -1,5 +1,8 @@
 package com.testing.service;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
 import java.net.URL;
 
 import static com.testing.service.TestingService.BASE_URI;
@@ -36,6 +39,13 @@ public class ServiceManager {
         }
         new URL(urlToBeTested[1]);
         System.setProperty("urlToBeTested",  urlToBeTested[1]);
+
+        Client c = ClientBuilder.newClient();
+        WebTarget target = c.target(String.format(BASE_URI, 8181));
+        try {
+            target.path("administration/stop").request().get();
+        } catch (Exception  e){
+        }
 
         service = new CopyDocumentsFromClassPath(new ChromeTestingService(new GrizzlyTestingService()));
 
