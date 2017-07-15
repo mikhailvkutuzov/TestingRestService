@@ -25,6 +25,6 @@ public class GrizzlyTestingService implements TestingService {
 
     @Override
     public void stop() {
-        server.shutdown();
+        server.shutdownNow();
     }
 }

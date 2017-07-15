@@ -10,6 +10,13 @@ import static com.testing.service.TestingService.BASE_URI;
  */
 @SuppressWarnings("all")
 public class ServiceManager {
+
+    private static TestingService service;
+
+    public static TestingService getService() {
+        return service;
+    }
+
     /**
      * This service starts if and only if [urlToBeTested] is handed on as an argument.
      * @param args urlToBeTested=http://<something>
@@ -29,14 +36,12 @@ public class ServiceManager {
         }
         new URL(urlToBeTested[1]);
         System.setProperty("urlToBeTested",  urlToBeTested[1]);
+
         TestingService service = new CopyDocumentsFromClassPath(new ChromeTestingService(new GrizzlyTestingService()));
+
         service.start("com.testing.service");
 
         System.out.println(String.format("Jersey app started with WADL available at %sapplication.wadl", String.format(BASE_URI, 8181)));
-
-        System.in.read();
-
-        service.stop();
     }
 }
 
