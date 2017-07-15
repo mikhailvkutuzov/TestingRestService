@@ -37,7 +37,7 @@ public class ServiceManager {
         new URL(urlToBeTested[1]);
         System.setProperty("urlToBeTested",  urlToBeTested[1]);
 
-        TestingService service = new CopyDocumentsFromClassPath(new ChromeTestingService(new GrizzlyTestingService()));
+        service = new CopyDocumentsFromClassPath(new ChromeTestingService(new GrizzlyTestingService()));
 
         service.start("com.testing.service");
 

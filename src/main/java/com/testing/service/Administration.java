@@ -15,6 +15,7 @@ public class Administration {
     @Path("stop")
     @Produces(MediaType.APPLICATION_JSON)
     public void stop(){
+        System.out.println("we have a stop request");
         ServiceManager.getService().stop();
     }
 }
