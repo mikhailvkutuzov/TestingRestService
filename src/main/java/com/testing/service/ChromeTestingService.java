@@ -12,21 +12,21 @@ import java.io.File;
  * Load chromium driver to run tests on Chrome browser.
  * Created by mikhail.kutuzov on 10.07.17.
  */
-public class ChromeTestingServiceCreator extends DelegatingServiceCreator {
-    public ChromeTestingServiceCreator(TestingServiceCreator service) {
+public class ChromeTestingService extends DelegatingService {
+    public ChromeTestingService(TestingService service) {
         super(service);
     }
 
     @Override
-    public HttpServer start(Class component) throws Exception {
+    public void start(Class component) throws Exception {
         chrome();
-        return super.start(component);
+        super.start(component);
     }
 
     @Override
-    public HttpServer start(String packagePath) throws Exception {
+    public void start(String packagePath) throws Exception {
         chrome();
-        return super.start(packagePath);
+        super.start(packagePath);
     }
 
     private void chrome(){

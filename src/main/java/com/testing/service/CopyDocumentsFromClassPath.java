@@ -13,22 +13,22 @@ import java.io.File;
  *
  * Created by mikhail.kutuzov on 10.07.17.
  */
-public class CopyDocumentsFromClassPath extends DelegatingServiceCreator {
+public class CopyDocumentsFromClassPath extends DelegatingService {
 
-    public CopyDocumentsFromClassPath(TestingServiceCreator service) {
+    public CopyDocumentsFromClassPath(TestingService service) {
         super(service);
     }
 
     @Override
-    public HttpServer start(Class component) throws Exception {
+    public void start(Class component) throws Exception {
         copyDocXResources();
-        return getService().start(component);
+        getService().start(component);
     }
 
     @Override
-    public HttpServer start(String packagePath) throws Exception {
+    public void start(String packagePath) throws Exception {
         copyDocXResources();
-        return getService().start(packagePath);
+        getService().start(packagePath);
     }
 
     private static class CouldNotCreateDocumentsResourceFolder extends RuntimeException {}

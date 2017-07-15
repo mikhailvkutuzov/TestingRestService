@@ -2,7 +2,6 @@ package com.testing.service;
 
 import com.testing.service.entities.TestCaseResult;
 import com.testing.service.entities.TestSuitResult;
-import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +10,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 
-import static com.testing.service.TestingServiceCreator.BASE_URI;
+import static com.testing.service.TestingService.BASE_URI;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -22,13 +21,14 @@ import static org.junit.Assert.assertTrue;
  */
 public class TestRealSuitFromComTesting {
 
-    private HttpServer server;
+    private TestingService server;
     private WebTarget target;
 
     @Before
     public void setUp() throws Exception {
         System.setProperty("urlToBeTested", "http://google.com/");
-        server = new CopyDocumentsFromClassPath(new ChromeTestingServiceCreator(new CoreTestingServiceCreator())).start(TestCaseResourcesComTesting.class);
+        server = new CopyDocumentsFromClassPath(new ChromeTestingService(new GrizzlyTestingService()));
+        server.start(TestCaseResourcesComTesting.class);
         Client c = ClientBuilder.newClient();
         target = c.target(String.format(BASE_URI, 8181));
     }
@@ -36,7 +36,7 @@ public class TestRealSuitFromComTesting {
     @After
     public void tearDown() throws Exception {
         if(server != null) {
-            server.shutdown();
+            server.stop();
         }
     }
 
