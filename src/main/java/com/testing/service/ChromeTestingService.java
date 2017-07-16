@@ -1,6 +1,5 @@
 package com.testing.service;
 
-import org.glassfish.grizzly.http.server.HttpServer;
 import test.smoketest.utils.DeterminateExtensionResource;
 import test.smoketest.utils.ExecutableResource;
 import test.smoketest.utils.ProduceChromeDriver;

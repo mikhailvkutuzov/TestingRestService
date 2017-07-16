@@ -1,6 +1,5 @@
 package com.testing.service;
 
-import org.glassfish.grizzly.http.server.HttpServer;
 import test.smoketest.utils.FileFromResource;
 import test.smoketest.utils.SingleFileByPath;
 
