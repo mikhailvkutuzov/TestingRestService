@@ -20,10 +20,10 @@ public class TestResultStructure {
 
     @Before
     public void setUp() throws Exception {
-        server = new GrizzlyTestingService();
+        server = new GrizzlyTestingService(8383);
         server.start(GetTestSuitResult.class);
         Client c = ClientBuilder.newClient();
-        target = c.target(String.format(BASE_URI, 8181));
+        target = c.target(String.format(BASE_URI, 8383));
     }
 
     @After

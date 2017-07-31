@@ -27,10 +27,10 @@ public class TestRealSuitFromComTesting {
     @Before
     public void setUp() throws Exception {
         System.setProperty("urlToBeTested", "http://google.com/");
-        server = new CopyDocumentsFromClassPath(new ChromeTestingService(new GrizzlyTestingService()));
+        server = new CopyDocumentsFromClassPath(new ChromeTestingService(new GrizzlyTestingService(8383)));
         server.start(TestCaseResourcesComTesting.class);
         Client c = ClientBuilder.newClient();
-        target = c.target(String.format(BASE_URI, 8181));
+        target = c.target(String.format(BASE_URI, 8383));
     }
 
     @After

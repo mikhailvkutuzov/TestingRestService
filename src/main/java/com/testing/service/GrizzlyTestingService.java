@@ -12,15 +12,20 @@ import java.net.URI;
  */
 public class GrizzlyTestingService implements TestingService {
     private HttpServer server;
+    private int port;
+
+    public GrizzlyTestingService(int port) {
+        this.port = port;
+    }
 
     public void start(Class component) throws Exception {
         final ResourceConfig rc = new ResourceConfig().register(component);
-        server = GrizzlyHttpServerFactory.createHttpServer(URI.create(String.format(BASE_URI, 8181)), rc);
+        server = GrizzlyHttpServerFactory.createHttpServer(URI.create(String.format(BASE_URI, port)), rc);
     }
 
     public void start(String packagePath) throws Exception {
         final ResourceConfig rc = new ResourceConfig().packages(packagePath);
-        server = GrizzlyHttpServerFactory.createHttpServer(URI.create(String.format(BASE_URI, 8181)), rc);
+        server = GrizzlyHttpServerFactory.createHttpServer(URI.create(String.format(BASE_URI, port)), rc);
     }
 
     @Override

@@ -18,12 +18,12 @@ public class TestAdministration {
     @Test
     public void test() throws Exception {
 
-        ServiceManager.main(new String[]{"urlToBeTested=http://google.com/"});
+        ServiceManager.main(new String[]{"urlToBeTested=http://google.com/", "port=8383"});
 
-        ServiceManager.main(new String[]{"urlToBeTested=http://google.com/"});
+        ServiceManager.main(new String[]{"urlToBeTested=http://google.com/", "port=8383"});
 
         Client c = ClientBuilder.newClient();
-        WebTarget target = c.target(String.format(BASE_URI, 8181));
+        WebTarget target = c.target(String.format(BASE_URI, 8383));
         try {
             target.path("administration/stop").request().get();
         } catch (Exception  e){

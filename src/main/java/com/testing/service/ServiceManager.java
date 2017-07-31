@@ -26,32 +26,41 @@ public class ServiceManager {
      * @throws Exception if no valid arguments are passed
      */
     public static void main(String[] args) throws Exception {
-        if (args.length != 1) {
-            throw new IllegalAccessException("Only one argument should be present");
+        if (args.length != 2) {
+            throw new IllegalAccessException("Two arguments should be present: urlToBeTested=<url> port=<port>");
         }
         String[] urlToBeTested = args[0].split("=");
         if (urlToBeTested.length != 2) {
-            throw new IllegalAccessException();
+            throw new IllegalAccessException("an url to be tested is not present");
         } else {
             if (!urlToBeTested[0].equals("urlToBeTested")) {
-                throw new IllegalAccessException("An argument name is not ");
+                throw new IllegalAccessException("An argument name is not [urlToBeTested]");
             }
         }
         new URL(urlToBeTested[1]);
         System.setProperty("urlToBeTested",  urlToBeTested[1]);
 
+        String[] ports = args[1].split("=");
+        if (ports.length != 2) {
+            throw new IllegalArgumentException("a port is not present");
+        } else {
+            if (!ports[0].equals("port")) {
+                throw new IllegalArgumentException("An argument name is not [port]");
+            }
+        }
+        int port = Integer.parseInt(ports[1]);
         Client c = ClientBuilder.newClient();
-        WebTarget target = c.target(String.format(BASE_URI, 8181));
+        WebTarget target = c.target(String.format(BASE_URI, port));
         try {
             target.path("administration/stop").request().get();
         } catch (Exception  e){
         }
 
-        service = new CopyDocumentsFromClassPath(new ChromeTestingService(new GrizzlyTestingService()));
+        service = new CopyDocumentsFromClassPath(new ChromeTestingService(new GrizzlyTestingService(port)));
 
         service.start("com.testing.service");
 
-        System.out.println(String.format("Jersey app started with WADL available at %sapplication.wadl", String.format(BASE_URI, 8181)));
+        System.out.println(String.format("Jersey app started with WADL available at %sapplication.wadl", String.format(BASE_URI, port)));
     }
 }
 
