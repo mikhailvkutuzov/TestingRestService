@@ -35,7 +35,7 @@ public class TestSuitesByPackageInCache implements TestRetriever {
             suitDescriptions = new TestSuitDescriptions();
             suitDescriptions.setUpdated(new Date());
             suitDescriptions.setDescriptions(testSuites.values().stream()
-                    .map(s -> new TestSuitDescription(s.getName(), s.getDescription()))
+                    .map(s -> new TestSuitDescription(s.getClass().getSimpleName(), s.getName(), s.getDescription()))
                     .collect(Collectors.toList()));
         } catch (Exception e) {
             throw new CouldNotFindClasses(e);

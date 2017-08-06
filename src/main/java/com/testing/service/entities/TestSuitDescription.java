@@ -13,10 +13,13 @@ public class TestSuitDescription {
     @XmlElement
     private String name;
     @XmlElement
+    private String briefDescription;
+    @XmlElement
     private String description;
 
-    public TestSuitDescription(String name, String description) {
+    public TestSuitDescription(String name,String briefDescription, String description) {
         this.name = name;
+        this.briefDescription = briefDescription;
         this.description = description;
     }
 
@@ -45,5 +48,13 @@ public class TestSuitDescription {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getBriefDescription() {
+        return briefDescription;
+    }
+
+    public void setBriefDescription(String briefDescription) {
+        this.briefDescription = briefDescription;
     }
 }
