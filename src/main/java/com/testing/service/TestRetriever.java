@@ -1,5 +1,6 @@
 package com.testing.service;
 
+import com.testing.service.entities.TestSuitDescriptions;
 import test.smoketest.test.TestSuite;
 
 /**
@@ -9,6 +10,8 @@ import test.smoketest.test.TestSuite;
 public interface TestRetriever {
 
     TestSuite get(String name) throws NoSuchATestSuit;
+
+    TestSuitDescriptions available();
 
     final class NoSuchATestSuit extends Exception {}
 }

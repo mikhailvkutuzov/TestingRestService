@@ -1,7 +1,10 @@
 package com.testing.service;
 
+import com.testing.service.entities.TestSuitDescription;
+import com.testing.service.entities.TestSuitDescriptions;
 import test.smoketest.test.TestSuite;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -13,6 +16,7 @@ import java.util.stream.Collectors;
  */
 public class TestSuitesByPackageInCache implements TestRetriever {
     private Map<String, TestSuite> testSuites;
+    private TestSuitDescriptions suitDescriptions;
 
     public TestSuitesByPackageInCache(String testingPackage) {
         try {
@@ -28,6 +32,11 @@ public class TestSuitesByPackageInCache implements TestRetriever {
                         }
                     })
                     .collect(Collectors.toMap(t -> t.getClass().getSimpleName(), t -> t));
+            suitDescriptions = new TestSuitDescriptions();
+            suitDescriptions.setUpdated(new Date());
+            suitDescriptions.setDescriptions(testSuites.values().stream()
+                    .map(s -> new TestSuitDescription(s.getName(), s.getDescription()))
+                    .collect(Collectors.toList()));
         } catch (Exception e) {
             throw new CouldNotFindClasses(e);
         }
@@ -41,6 +50,11 @@ public class TestSuitesByPackageInCache implements TestRetriever {
         } else {
             throw new NoSuchATestSuit();
         }
+    }
+
+    @Override
+    public TestSuitDescriptions available() {
+        return suitDescriptions;
     }
 
     public static final class TestSuitCreation extends RuntimeException {

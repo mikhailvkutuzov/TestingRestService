@@ -1,14 +1,19 @@
 package com.testing.service;
 
 import com.testing.service.entities.TestCaseResult;
+import com.testing.service.entities.TestSuitDescription;
+import com.testing.service.entities.TestSuitDescriptions;
 import com.testing.service.entities.TestSuitResult;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
+
+import java.util.List;
 
 import static com.testing.service.TestingService.BASE_URI;
 import static org.junit.Assert.assertEquals;
@@ -50,6 +55,13 @@ public class TestRealSuitFromComTesting {
         assertTrue(response.getResults().size() == 1);
         r0 = response.getResults().get(0);
         assertEquals("", r0.getMessage());
+        TestSuitDescriptions descriptions = target.path("test-suit/suits-available").request().get(TestSuitDescriptions.class);
+        GoogleTestSuit sample = new GoogleTestSuit();
+        assertEquals(1, descriptions.getDescriptions().size());
+        TestSuitDescription suitDescription = descriptions.getDescriptions().get(0);
+
+        assertEquals(sample.getName(), suitDescription.getName());
+        assertEquals(sample.getDescription(), suitDescription.getDescription());
     }
 
 }

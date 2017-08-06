@@ -1,8 +1,6 @@
 package com.testing.service;
 
-import com.testing.service.entities.TestCaseDescription;
-import com.testing.service.entities.TestCaseResult;
-import com.testing.service.entities.TestSuitResult;
+import com.testing.service.entities.*;
 import test.smoketest.core.WebBrowsers;
 import test.smoketest.test.TestAndTestResult;
 import test.smoketest.test.TestResult;
@@ -61,6 +59,13 @@ public class TestCaseResourcesComTesting {
         } catch (TestRetriever.NoSuchATestSuit e) {
             return none;
         }
+    }
+
+    @GET
+    @Path("suits-available")
+    @Produces(MediaType.APPLICATION_JSON)
+    public TestSuitDescriptions availableDescriptions() {
+        return retriever.available();
     }
 
     private String message(TestResult r) {
